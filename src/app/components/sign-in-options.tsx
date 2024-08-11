@@ -10,12 +10,20 @@ export function SignInOptions(){
     const [password, setPassword] = useState<string>("");
     const router = useRouter();
     async function RequestAuthorization() {
-        await UserService.prototype.SignIn(email,password).then((response) => {
+        await UserService.prototype.SignIn(email,password).then(() => {
+            setUserToStorage();
             alert("You are logged successfully! Your token will expire in 1 hour.");
+            window.location.reload();
         }).catch(() => {
             alert("Invalid email or password");
         });
 
+    }
+
+    async function setUserToStorage(){
+        await UserService.prototype.GetUserByEmail(email).then((response: any) =>{
+            sessionStorage.setItem("user", JSON.stringify(response.data));
+        })
     }
 
     return (

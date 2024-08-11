@@ -56,6 +56,21 @@ h1,p{
   width: 100vw;
 }
 
+.profile-container {
+    background-image: linear-gradient(
+            to top right,
+            rgba(0, 0, 0, 0.5),
+            rgba(0, 0, 0, 0.5)
+    ), url("https://raw.githubusercontent.com/LordMathi2741/Report-Management-Frontend/master/src/assets/background-my-profile.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    height: 100vh;
+    width: 100vw;
+
+}
+
 .sign-up-page-container {
     background-image: linear-gradient(
             to top right,

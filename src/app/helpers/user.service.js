@@ -8,4 +8,8 @@ export class UserService {
     SignUp(user){
         return http.post('user/sign-up',user)
     }
+
+    GetUserByEmail(email){
+        return http.get(`user/email/${email}`)
+    }
 }
