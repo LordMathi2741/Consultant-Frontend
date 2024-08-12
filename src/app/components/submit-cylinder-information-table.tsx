@@ -1,15 +1,20 @@
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import React, {useEffect, useState} from "react";
-import {InputTableCylinder} from "@/app/components/edit-table-options-cylinder";
-import {OperationCenterService} from "@/app/helpers/operation-center.service";
-import CustomButton from "@/app/public/components/custom-button";
+import React, { useEffect, useState } from "react";
+import { OperationCenterService } from "@/app/helpers/operation-center.service";
+import { InputTableCylinder } from "@/app/components/table-options-cylinder";
+import {useFormSubmit} from "@/app/context/form-submit-context";
 
-export function OperationCenterTableInformation() {
+export function SubmitCylinderInformationTable() {
+    const { addSubmitListener } = useFormSubmit();
     const [id, setId] = useState(null);
+
     useEffect(() => {
-        setId(JSON.parse(sessionStorage.getItem('user') || '{}').id);
-    });
+        const userId = JSON.parse(sessionStorage.getItem('user') || '{}').id;
+        setId(userId);
+    }, []);
+
+
     const [cylinder, setCylinder] = useState({
         brand: "",
         serieNumber: "",
@@ -18,10 +23,7 @@ export function OperationCenterTableInformation() {
     });
 
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
-        let value: string | number | null = e.target.value;
-        if (field === "capacity") {
-            value = parseInt(value);
-        }
+        const value = field === "capacity" ? parseInt(e.target.value) : e.target.value;
         setCylinder((prevValues) => ({
             ...prevValues,
             [field]: value,
@@ -29,27 +31,31 @@ export function OperationCenterTableInformation() {
         }));
     };
 
-    async function SubmitCylinder(){
-        await OperationCenterService.prototype.SubmitCylinder(cylinder).then((response) => {
+    async function submitCylinder() {
+        try {
+            const response = await OperationCenterService.prototype.SubmitCylinder(cylinder);
             sessionStorage.setItem('cylinder', JSON.stringify(response.data));
-        }).catch(() => {
+        } catch {
             console.log(cylinder)
-           alert("Error while submitting the cylinder.")
-        });
+            alert("Error while submitting the cylinder.");
+        }
     }
 
+    useEffect(() => {
+        addSubmitListener(submitCylinder);
+    }, []);
 
     return (
         <div className="flex flex-col justify-center items-center bg-gray-100 shadow-lg rounded-lg p-4">
             <DataTable
                 className="p-10"
                 value={[cylinder]}
-                header="Cilindro"
+                header="CILINDRO"
                 tableStyle={{ minWidth: '50rem' }}
             >
                 <Column
                     header="Marca"
-                    body={() => <InputTableCylinder cylinder={cylinder} onInputChange={onInputChange}  propertyKey={"brand"} placeholder={"Marca:"}/>}
+                    body={() => <InputTableCylinder cylinder={cylinder} onInputChange={onInputChange} propertyKey={"brand"} placeholder={"Marca:"} />}
                     headerStyle={{
                         backgroundColor: '#66c85f',
                         color: '#374151',
@@ -65,7 +71,7 @@ export function OperationCenterTableInformation() {
 
                 <Column
                     header="Nº Serie"
-                    body={() => <InputTableCylinder cylinder={cylinder} onInputChange={onInputChange}  propertyKey={"serieNumber"} placeholder={"Nº Serie:"}/>}
+                    body={() => <InputTableCylinder cylinder={cylinder} onInputChange={onInputChange} propertyKey={"serieNumber"} placeholder={"Nº Serie:"} />}
                     headerStyle={{
                         backgroundColor: '#66c85f',
                         color: '#374151',
@@ -81,7 +87,7 @@ export function OperationCenterTableInformation() {
 
                 <Column
                     header="Capacidad"
-                    body={() => <InputTableCylinder cylinder={cylinder} onInputChange={onInputChange}  propertyKey={"capacity"} placeholder={"Capacidad:"}/>}
+                    body={() => <InputTableCylinder cylinder={cylinder} onInputChange={onInputChange} propertyKey={"capacity"} placeholder={"Capacidad:"} />}
                     headerStyle={{
                         backgroundColor: '#66c85f',
                         color: '#374151',
@@ -94,9 +100,7 @@ export function OperationCenterTableInformation() {
                         padding: '0.75rem',
                     }}
                 ></Column>
-                
             </DataTable>
-            <CustomButton text={"Submit"} color={"bg-emerald-500"} onClick={SubmitCylinder}/>
         </div>
     );
 }
