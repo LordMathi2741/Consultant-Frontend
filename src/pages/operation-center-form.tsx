@@ -1,14 +1,15 @@
 import CustomToolbar from "@/app/public/components/custom-toolbar";
-import {OperationCenterOptions} from "@/app/components/operation-center-options";
+import {OperationCenterTableInformation} from "@/app/components/operation-center-table-information";
 
 function OperationCenterForm(){
     return (
         <div>
             <CustomToolbar/>
-            <div className="flex justify-center">
-                <OperationCenterOptions/>
+            <div className="operation-center-container flex justify-center items-center">
+                <OperationCenterTableInformation/>
             </div>
         </div>
+
     )
 }
 export default OperationCenterForm;

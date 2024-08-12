@@ -54,6 +54,18 @@ h1,p{
   width: 100vw;
 }
 
+.operation-center-container {
+    background-image: linear-gradient(
+            to top right,
+            rgba(0, 0, 0, 0.5),
+            rgba(0, 0, 0, 0.5)
+    ), url("https://raw.githubusercontent.com/LordMathi2741/Report-Management-Frontend/master/src/assets/background-search-report.png");
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    width: 100vw;
+}
+
 .profile-container {
     background-image: linear-gradient(
             to top right,
@@ -92,6 +104,11 @@ h1,p{
     width: 100vw;
 
 }
+
+.column {
+    border: groove 1px black;
+}
+
 
 
 .img-size{
