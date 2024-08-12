@@ -30,7 +30,12 @@ export default function CustomToolbar(){
                 <ul className={`${toggle ? 'flex' : 'hidden'} lg:flex flex-col lg:flex-row text-xs lg:text-base gap-3 mt-6`}>
                     {
                         isLogged ? (
-                            <li className="bg-black text-white w-24 hover:cursor-pointer text-center p-2 rounded-lg"><a onClick={() => router.push("/profile")}>Profile</a></li>
+                            <>
+                                <li className="bg-black text-white w-24 hover:cursor-pointer text-center p-2 rounded-lg">
+                                    <a onClick={() => router.push("/profile")}>Profile</a></li>
+                                <li className="bg-black text-white w-24 hover:cursor-pointer text-center p-2 rounded-lg">
+                                    <a onClick={() => router.push("/emit-card")}>Emit card</a></li>
+                            </>
                         ) : (
                             <li className=" bg-black text-white w-24 hover:cursor-pointer text-center p-2 rounded-lg"><a onClick={() => router.push("/sign-in")}>Sign In</a></li>
                         )

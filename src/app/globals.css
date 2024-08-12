@@ -24,7 +24,7 @@
   }
 }
 
-body {
+* {
   padding: 0;
   margin: 0;
     font-family: 'Roboto', sans-serif;
@@ -49,9 +49,7 @@ h1,p{
           rgba(0, 0, 0, 0.5)
   ), url("https://raw.githubusercontent.com/LordMathi2741/Report-Management-Frontend/a051c9c2481c7944703f2aaf45ca9bc6bca687f8/src/assets/backgorundSignin.png");
   background-size: cover;
-  background-repeat: no-repeat;
   background-position: center;
-  background-attachment: fixed;
     height: 100vh;
   width: 100vw;
 }
@@ -63,9 +61,7 @@ h1,p{
             rgba(0, 0, 0, 0.5)
     ), url("https://raw.githubusercontent.com/LordMathi2741/Report-Management-Frontend/master/src/assets/background-my-profile.png");
     background-size: cover;
-    background-repeat: no-repeat;
     background-position: center;
-    background-attachment: fixed;
     height: 100vh;
     width: 100vw;
 
@@ -78,10 +74,21 @@ h1,p{
             rgba(0, 0, 0, 0.5)
     ), url("https://raw.githubusercontent.com/LordMathi2741/Report-Management-Frontend/master/src/assets/background-sign-up.png");
     background-size: cover;
-    background-repeat: no-repeat;
     background-position: center;
-    background-attachment: fixed;
-        height: 150vh;
+    height: 150vh;
+    width: 100vw;
+
+}
+
+.emit-card-container {
+    background-image: linear-gradient(
+            to top right,
+            rgba(0, 0, 0, 0.5),
+            rgba(0, 0, 0, 0.5)
+    ), url("https://raw.githubusercontent.com/LordMathi2741/Report-Management-Frontend/master/src/assets/background-search-report.png");
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
     width: 100vw;
 
 }
