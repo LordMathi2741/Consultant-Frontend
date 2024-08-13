@@ -49,7 +49,7 @@ export function SubmitVehicleInformation(){
     async function submitVehicle(){
         await OperationCenterService.prototype.SubmitVehicle(vehicle).then((response) => {
             sessionStorage.setItem("vehicle", JSON.stringify(response));
-            router.push("/sign-in");
+            router.push("/operation-center-details-form");
         }).catch(() => {
             alert("Error while submitting vehicle information. Please try again.")
         })
