@@ -1,8 +1,8 @@
 import CustomToolbar from "@/app/public/components/custom-toolbar";
-import {SubmitCylinderInformationTable} from "@/app/components/submit-cylinder-information-table";
 import React from "react";
+import {SubmitCylinderInformationTable} from "@/app/components/submit-cylinder-information-table";
 
-function OperationCenterForm(){
+export function CylinderFrom(){
     return (
         <div>
             <CustomToolbar/>
@@ -10,7 +10,5 @@ function OperationCenterForm(){
                 <SubmitCylinderInformationTable/>
             </div>
         </div>
-
     )
 }
-export default OperationCenterForm;

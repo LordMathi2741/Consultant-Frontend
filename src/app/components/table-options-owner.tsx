@@ -1,6 +1,6 @@
 import React from "react";
 import {InputText} from "primereact/inputtext";
-import {capitalizeFirstLetter} from "@/app/extensions/extends-methods";
+import {capitalizeFirstLetter} from "@/app/extensions/extend-methods";
 
 interface SubmitOwnerInformationTableProps {
     owner :{

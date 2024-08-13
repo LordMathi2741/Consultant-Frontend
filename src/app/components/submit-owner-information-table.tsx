@@ -1,13 +1,13 @@
-import {useFormSubmit} from "@/app/context/form-submit-context";
+
 import React, {useEffect, useState} from "react";
-import {OperationCenterService} from "@/app/helpers/operation-center.service";
 import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
 import {InputTableOwner} from "@/app/components/table-options-owner";
+import {useRouter} from "next/navigation";
+import {OperationCenterService} from "@/app/helpers/operation-center.service";
+import CustomButton from "@/app/public/components/custom-button";
 
 export function SubmitOwnerInformationTable(){
-    const { addSubmitListener } = useFormSubmit();
-    const [isSubmitting, setIsSubmitting] = useState(false);
     const [owner, setOwner] = useState({
         firstName: "",
         lastName: "",
@@ -19,6 +19,7 @@ export function SubmitOwnerInformationTable(){
         department: "",
 
     });
+    const router = useRouter();
 
     const onChanges = (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
        const value = e.target.value;
@@ -29,35 +30,11 @@ export function SubmitOwnerInformationTable(){
     }
 
     async function submitOwner(){
-        if(isSubmitting) return;
-
-        setIsSubmitting(true);
-        try {
-            setOwner((prevValues) => {
-                const updatedOwner = { ...prevValues };
-                OperationCenterService.prototype.SubmitOwner(updatedOwner)
-                    .then((response) => {
-                        sessionStorage.setItem('owner', JSON.stringify(response.data));
-                    })
-                    .catch((error) => {
-                        alert("Error while submitting the owner.");
-                    });
-                return updatedOwner;
-            });
-        } finally {
-            setIsSubmitting(false);
-        }
+        await OperationCenterService.prototype.SubmitOwner(owner).then((response) => {
+            sessionStorage.setItem("owner", JSON.stringify(response.data));
+            router.push("/vehicle-form");
+        });
     }
-
-    useEffect(() => {
-        const submitListener = () => {
-            submitOwner();
-        }
-        addSubmitListener(submitListener);
-        return () => {
-
-        };
-    }, []);
     return (
         <div className="flex flex-col justify-center items-center bg-gray-100 shadow-lg rounded-lg p-4">
             <DataTable
@@ -187,11 +164,7 @@ export function SubmitOwnerInformationTable(){
                     }}/>
 
             </DataTable>
-
-
-
-
-
+            <CustomButton text={"Submit"} color={"bg-emerald-500"} onClick={submitOwner} />
         </div>
     )
 }

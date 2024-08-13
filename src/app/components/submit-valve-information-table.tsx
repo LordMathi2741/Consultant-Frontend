@@ -3,12 +3,12 @@ import React, { useEffect, useState } from "react";
 import { Column } from "primereact/column";
 import { InputTableValve } from "@/app/components/table-options-valve";
 import { OperationCenterService } from "@/app/helpers/operation-center.service";
-import {useFormSubmit} from "@/app/context/form-submit-context";
+import {useRouter} from "next/navigation";
+import CustomButton from "@/app/public/components/custom-button";
 
 export function SubmitValveInformationTable() {
-    const { addSubmitListener } = useFormSubmit();
-    const [isSubmitting, setIsSubmitting] = useState(false);
     const [cylinderId, setCylinderId] = useState(null);
+    const router = useRouter();
 
     useEffect(() => {
         const storedCylinder = JSON.parse(sessionStorage.getItem('cylinder') || '{}');
@@ -34,30 +34,14 @@ export function SubmitValveInformationTable() {
         }));
     };
 
-    function submitValve() {
-        if (isSubmitting) return;
-
-        setIsSubmitting(true);
-        try {
-            setValve((prevValues) => {
-                const updatedValve = { ...prevValues };
-                OperationCenterService.prototype.SubmitValve(updatedValve)
-                    .then((response) => {
-                        sessionStorage.setItem('valve', JSON.stringify(response.data));
-                    })
-                    .catch(() => {
-                        alert("Error while submitting the valve.");
-                    });
-                return updatedValve;
-            });
-        } finally {
-            setIsSubmitting(false);
-        }
+    async function submitValve() {
+        await OperationCenterService.prototype.SubmitValve(valve).then((response) => {
+            sessionStorage.setItem('valve', JSON.stringify(response.data));
+            router.push('/owner-form');
+        }).catch(()=>{
+            alert("Error while submitting the valve, please check the params.");
+        });
     }
-
-    useEffect(() => {
-        addSubmitListener(submitValve);
-    }, []);
 
     return (
         <div className="flex flex-col justify-center items-center bg-gray-100 shadow-lg rounded-lg p-4">
@@ -115,6 +99,8 @@ export function SubmitValveInformationTable() {
                     }}
                 ></Column>
             </DataTable>
+            <CustomButton text={"Submit"} color={"bg-emerald-500"} onClick={submitValve} />
+
         </div>
     );
 }

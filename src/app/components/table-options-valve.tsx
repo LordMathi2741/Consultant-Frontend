@@ -1,7 +1,7 @@
 import {InputText} from "primereact/inputtext";
 
 import React from "react";
-import {capitalizeFirstLetter} from "@/app/extensions/extends-methods";
+import {capitalizeFirstLetter} from "@/app/extensions/extend-methods";
 
 interface TableColumnProps {
     valve: {

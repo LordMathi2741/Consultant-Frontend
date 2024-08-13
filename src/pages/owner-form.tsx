@@ -1,16 +1,16 @@
 import CustomToolbar from "@/app/public/components/custom-toolbar";
-import {SubmitCylinderInformationTable} from "@/app/components/submit-cylinder-information-table";
 import React from "react";
+import {SubmitOwnerInformationTable} from "@/app/components/submit-owner-information-table";
 
-function OperationCenterForm(){
+function OwnerForm(){
     return (
         <div>
             <CustomToolbar/>
             <div className="operation-center-container flex justify-center items-center flex-col gap-5">
-                <SubmitCylinderInformationTable/>
+                <SubmitOwnerInformationTable/>
             </div>
         </div>
-
     )
 }
-export default OperationCenterForm;
+
+export default OwnerForm;

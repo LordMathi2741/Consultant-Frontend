@@ -4,11 +4,12 @@ import React, { useEffect, useState } from "react";
 import { OperationCenterService } from "@/app/helpers/operation-center.service";
 import { InputTableCylinder } from "@/app/components/table-options-cylinder";
 import { useFormSubmit } from "@/app/context/form-submit-context";
+import CustomButton from "@/app/public/components/custom-button";
+import {useRouter} from "next/navigation";
 
 export function SubmitCylinderInformationTable() {
-    const { addSubmitListener } = useFormSubmit();
     const [id, setId] = useState(null);
-    const [isSubmitting, setIsSubmitting] = useState(false);
+    const router = useRouter();
     const [cylinder, setCylinder] = useState({
         brand: "",
         serieNumber: "",
@@ -31,36 +32,14 @@ export function SubmitCylinderInformationTable() {
     };
 
     async function submitCylinder() {
-        if (isSubmitting) return;
-
-        setIsSubmitting(true);
-        try {
-            setCylinder((prevValues) => {
-                const updatedCylinder = { ...prevValues };
-                OperationCenterService.prototype.SubmitCylinder(updatedCylinder)
-                    .then((response) => {
-                        sessionStorage.setItem('cylinder', JSON.stringify(response.data));
-                    })
-                    .catch((error) => {
-                        alert("Error while submitting the cylinder.");
-                    });
-                return updatedCylinder;
-            });
-        } finally {
-            setIsSubmitting(false);
-        }
+        await OperationCenterService.prototype.SubmitCylinder(cylinder).then((response) => {
+            sessionStorage.setItem('cylinder', JSON.stringify(response.data));
+            router.push('/valve-form');
+        }).catch(() => {
+            alert("Error while submitting the cylinder, please check the params.");
+        });
     }
 
-    useEffect(() => {
-        const submitListener = () => {
-            submitCylinder();
-        };
-
-        addSubmitListener(submitListener);
-
-        return () => {
-        };
-    }, []);
 
     return (
         <div className="flex flex-col justify-center items-center bg-gray-100 shadow-lg rounded-lg p-4">
@@ -118,6 +97,7 @@ export function SubmitCylinderInformationTable() {
                     }}
                 ></Column>
             </DataTable>
+            <CustomButton text={"Submit"} color={"bg-emerald-500"} onClick={submitCylinder} />
         </div>
     );
 }
