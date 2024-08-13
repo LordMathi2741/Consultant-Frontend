@@ -36,7 +36,7 @@ export function SubmitOperationCenterInformationTable(){
     async function submitOperationCenter() {
         await OperationCenterService.prototype.SubmitOperationCenter(operationCenter).then((response) => {
             sessionStorage.setItem('operationCenter', JSON.stringify(response.data));
-            router.push('/cylinder-form');
+            router.push('/certifier-form');
         }).catch(() => {
             alert("Error while submitting the operation center, please check the params.");
         });
