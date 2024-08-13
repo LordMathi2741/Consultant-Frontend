@@ -1,5 +1,6 @@
 import { InputText } from "primereact/inputtext";
 import React from "react";
+import {capitalizeFirstLetter} from "@/app/extensions/extends-methods";
 
 interface TableColumnProps {
     cylinder: {
@@ -10,9 +11,6 @@ interface TableColumnProps {
     onInputChange: (e: React.ChangeEvent<HTMLInputElement>, field: string) => void;
     propertyKey: string;
     placeholder: string;
-}
-function capitalizeFirstLetter(str: string) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 export function InputTableCylinder({ cylinder, onInputChange, propertyKey, placeholder }: TableColumnProps) {

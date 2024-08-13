@@ -7,6 +7,7 @@ import {useFormSubmit} from "@/app/context/form-submit-context";
 
 export function SubmitValveInformationTable() {
     const { addSubmitListener } = useFormSubmit();
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [cylinderId, setCylinderId] = useState(null);
 
     useEffect(() => {
@@ -33,13 +34,24 @@ export function SubmitValveInformationTable() {
         }));
     };
 
-    async function submitValve() {
+    function submitValve() {
+        if (isSubmitting) return;
+
+        setIsSubmitting(true);
         try {
-            const response = await OperationCenterService.prototype.SubmitValve(valve);
-            sessionStorage.setItem('valve', JSON.stringify(response.data));
-        } catch {
-            console.log(valve)
-            alert("Error while submitting the valve.");
+            setValve((prevValues) => {
+                const updatedValve = { ...prevValues };
+                OperationCenterService.prototype.SubmitValve(updatedValve)
+                    .then((response) => {
+                        sessionStorage.setItem('valve', JSON.stringify(response.data));
+                    })
+                    .catch(() => {
+                        alert("Error while submitting the valve.");
+                    });
+                return updatedValve;
+            });
+        } finally {
+            setIsSubmitting(false);
         }
     }
 

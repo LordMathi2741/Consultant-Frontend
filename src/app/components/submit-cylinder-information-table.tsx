@@ -3,18 +3,12 @@ import { Column } from "primereact/column";
 import React, { useEffect, useState } from "react";
 import { OperationCenterService } from "@/app/helpers/operation-center.service";
 import { InputTableCylinder } from "@/app/components/table-options-cylinder";
-import {useFormSubmit} from "@/app/context/form-submit-context";
+import { useFormSubmit } from "@/app/context/form-submit-context";
 
 export function SubmitCylinderInformationTable() {
     const { addSubmitListener } = useFormSubmit();
     const [id, setId] = useState(null);
-
-    useEffect(() => {
-        const userId = JSON.parse(sessionStorage.getItem('user') || '{}').id;
-        setId(userId);
-    }, []);
-
-
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [cylinder, setCylinder] = useState({
         brand: "",
         serieNumber: "",
@@ -22,8 +16,13 @@ export function SubmitCylinderInformationTable() {
         clientId: null
     });
 
+    useEffect(() => {
+        const userId = JSON.parse(sessionStorage.getItem('user') || '{}').id;
+        setId(userId);
+    }, []);
+
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
-        const value = field === "capacity" ? parseInt(e.target.value) : e.target.value;
+        const value = e.target.value;
         setCylinder((prevValues) => ({
             ...prevValues,
             [field]: value,
@@ -32,17 +31,35 @@ export function SubmitCylinderInformationTable() {
     };
 
     async function submitCylinder() {
+        if (isSubmitting) return;
+
+        setIsSubmitting(true);
         try {
-            const response = await OperationCenterService.prototype.SubmitCylinder(cylinder);
-            sessionStorage.setItem('cylinder', JSON.stringify(response.data));
-        } catch {
-            console.log(cylinder)
-            alert("Error while submitting the cylinder.");
+            setCylinder((prevValues) => {
+                const updatedCylinder = { ...prevValues };
+                OperationCenterService.prototype.SubmitCylinder(updatedCylinder)
+                    .then((response) => {
+                        sessionStorage.setItem('cylinder', JSON.stringify(response.data));
+                    })
+                    .catch((error) => {
+                        alert("Error while submitting the cylinder.");
+                    });
+                return updatedCylinder;
+            });
+        } finally {
+            setIsSubmitting(false);
         }
     }
 
     useEffect(() => {
-        addSubmitListener(submitCylinder);
+        const submitListener = () => {
+            submitCylinder();
+        };
+
+        addSubmitListener(submitListener);
+
+        return () => {
+        };
     }, []);
 
     return (
