@@ -1,12 +1,15 @@
+
+import "../app/globals.css";
+import React from "react";
 import CustomToolbar from "@/app/public/components/custom-toolbar";
 import {useEffect, useState} from "react";
 import {User} from "@/app/models/user.model";
-import {any} from "prop-types";
 
 function Profile() {
     const [user, setUser] = useState<User>({} as User);
     useEffect(() => {
-        setUser(JSON.parse(sessionStorage.getItem("user") as any) as User);
+        const storedUser = sessionStorage.getItem("user");
+        setUser(JSON.parse(storedUser || "{}") as User);
 
     }, []);
   return (

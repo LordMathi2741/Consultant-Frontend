@@ -1,3 +1,5 @@
+
+import "../app/globals.css";
 import CustomToolbar from "@/app/public/components/custom-toolbar";
 import React from "react";
 import {SubmitValveInformationTable} from "@/app/components/submit-valve-information-table";
