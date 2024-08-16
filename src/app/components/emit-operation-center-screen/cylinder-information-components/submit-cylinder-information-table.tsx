@@ -4,14 +4,14 @@ import React, { useEffect, useState } from "react";
 import { OperationCenterService } from "@/app/helpers/operation-center.service";
 
 import CustomButton from "@/app/public/components/custom-button";
-import {useRouter} from "next/navigation";
 import {
     InputTableCylinder
 } from "@/app/components/emit-operation-center-screen/cylinder-information-components/table-options-cylinder";
-
+import CylinderFormDialog
+    from "@/app/components/emit-operation-center-screen/cylinder-information-components/cylinder-form-dialog";
 export function SubmitCylinderInformationTable() {
     const [id, setId] = useState(null);
-    const router = useRouter();
+    const [dialogVisible, setDialogVisible] = useState(false);
     const [cylinder, setCylinder] = useState({
         brand: "",
         serieNumber: "",
@@ -36,7 +36,7 @@ export function SubmitCylinderInformationTable() {
     async function submitCylinder() {
         await OperationCenterService.prototype.SubmitCylinder(cylinder).then((response) => {
             sessionStorage.setItem('cylinder', JSON.stringify(response.data));
-            router.push('/valve-form');
+            setDialogVisible(true);
         }).catch(() => {
             alert("Error while submitting the cylinder, please check the params.");
         });
@@ -99,6 +99,7 @@ export function SubmitCylinderInformationTable() {
                     }}
                 ></Column>
             </DataTable>
+            <CylinderFormDialog visible={dialogVisible} setVisible={setDialogVisible}/>
             <CustomButton text={"Submit"} color={"bg-emerald-500"} onClick={submitCylinder} />
         </div>
     );

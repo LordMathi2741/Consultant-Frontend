@@ -59,7 +59,7 @@ export function SubmitCertifierInformationTable() {
             >
                 <Column
                     header="Nombre"
-                    body={() => <InputTableCertifier  certifier={certifier} onInputChange={onInputChange} placeholder={"Nombre:"} propertyKey={"name"}/>}
+                    body={() => <InputTableCertifier  certifier={certifier} onInputChange={onInputChange} placeholder={"Nombre del Certificador:"} propertyKey={"name"}/>}
                     headerStyle={{
                         backgroundColor: '#66c85f',
                         color: '#374151',
@@ -75,7 +75,7 @@ export function SubmitCertifierInformationTable() {
 
                 <Column
                     header="Marca"
-                    body={() => <InputTableCertifier  certifier={certifier} onInputChange={onInputChange} placeholder={"Marca:"} propertyKey={"brand"}/>}
+                    body={() => <InputTableCertifier  certifier={certifier} onInputChange={onInputChange} placeholder={"Empresa Certificadora:"} propertyKey={"brand"}/>}
                     headerStyle={{
                         backgroundColor: '#66c85f',
                         color: '#374151',
