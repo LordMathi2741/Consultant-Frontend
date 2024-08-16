@@ -1,7 +1,9 @@
 import "../app/globals.css";
 import CustomToolbar from "@/app/public/components/custom-toolbar";
 import React from "react";
-import {SubmitCylinderInformationTable} from "@/app/components/submit-cylinder-information-table";
+import {
+    SubmitCylinderInformationTable
+} from "@/app/components/emit-operation-center-screen/cylinder-information-components/submit-cylinder-information-table";
 
  function CylinderFrom(){
     return (

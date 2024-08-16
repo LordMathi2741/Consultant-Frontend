@@ -3,8 +3,10 @@ import React, {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
 import {OperationCenterService} from "@/app/helpers/operation-center.service";
 import {Column} from "primereact/column";
-import {InputTableCertifier} from "@/app/components/table-options-certifier";
 import CustomButton from "@/app/public/components/custom-button";
+import {
+    InputTableCertifier
+} from "@/app/components/emit-operation-center-screen/certifier-information-components/table-options-certifier";
 
 export function SubmitCertifierInformationTable() {
 

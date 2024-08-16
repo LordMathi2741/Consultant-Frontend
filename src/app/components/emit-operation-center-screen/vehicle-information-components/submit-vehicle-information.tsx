@@ -2,9 +2,11 @@ import {DataTable} from "primereact/datatable";
 import React, {useEffect, useState} from "react";
 import {OperationCenterService} from "@/app/helpers/operation-center.service";
 import {Column} from "primereact/column";
-import {InputTableVehicle} from "@/app/components/table-vehicle-options";
 import {useRouter} from "next/navigation";
 import CustomButton from "@/app/public/components/custom-button";
+import {
+    InputTableVehicle
+} from "@/app/components/emit-operation-center-screen/vehicle-information-components/table-vehicle-options";
 
 
 export function SubmitVehicleInformation(){

@@ -1,57 +1,77 @@
 import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
 import React, { useEffect, useState } from "react";
+import { Column } from "primereact/column";
 import { OperationCenterService } from "@/app/helpers/operation-center.service";
-import { InputTableCylinder } from "@/app/components/table-options-cylinder";
-import { useFormSubmit } from "@/app/context/form-submit-context";
-import CustomButton from "@/app/public/components/custom-button";
 import {useRouter} from "next/navigation";
+import CustomButton from "@/app/public/components/custom-button";
+import {
+    InputTableValve
+} from "@/app/components/emit-operation-center-screen/valve-information-components/table-options-valve";
 
-export function SubmitCylinderInformationTable() {
-    const [id, setId] = useState(null);
+export function SubmitValveInformationTable() {
+    const [cylinderId, setCylinderId] = useState(null);
     const router = useRouter();
-    const [cylinder, setCylinder] = useState({
-        brand: "",
-        serieNumber: "",
-        capacity: null,
-        clientId: null
-    });
 
     useEffect(() => {
-        const userId = JSON.parse(sessionStorage.getItem('user') || '{}').id;
-        setId(userId);
+        const storedCylinder = JSON.parse(sessionStorage.getItem('cylinder') || '{}');
+        setCylinderId(storedCylinder.id);
     }, []);
+
+
+
+
+    const [valve, setValve] = useState({
+        brand: "",
+        model: "",
+        serieNumber: "",
+        cylinderId: null
+    });
 
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
         const value = e.target.value;
-        setCylinder((prevValues) => ({
+        setValve((prevValues) => ({
             ...prevValues,
             [field]: value,
-            clientId: id
+            cylinderId: cylinderId
         }));
     };
 
-    async function submitCylinder() {
-        await OperationCenterService.prototype.SubmitCylinder(cylinder).then((response) => {
-            sessionStorage.setItem('cylinder', JSON.stringify(response.data));
-            router.push('/valve-form');
-        }).catch(() => {
-            alert("Error while submitting the cylinder, please check the params.");
+    async function submitValve() {
+        await OperationCenterService.prototype.SubmitValve(valve).then((response) => {
+            sessionStorage.setItem('valve', JSON.stringify(response.data));
+            router.push('/owner-form');
+        }).catch(()=>{
+            alert("Error while submitting the valve, please check the params.");
         });
     }
-
 
     return (
         <div className="flex flex-col justify-center items-center bg-gray-100 shadow-lg rounded-lg p-4">
             <DataTable
                 className="p-10"
-                value={[cylinder]}
-                header="CILINDRO"
+                value={[valve]}
+                header="VÁLVULA"
                 tableStyle={{ minWidth: '50rem' }}
             >
                 <Column
                     header="Marca"
-                    body={() => <InputTableCylinder cylinder={cylinder} onInputChange={onInputChange} propertyKey={"brand"} placeholder={"Marca:"} />}
+                    body={() => <InputTableValve valve={valve} onInputChange={onInputChange} propertyKey={"brand"} placeholder={"Marca:"} />}
+                    headerStyle={{
+                        backgroundColor: '#66c85f',
+                        color: '#374151',
+                        fontWeight: 'bold',
+                        padding: '0.75rem',
+                    }}
+                    bodyStyle={{
+                        backgroundColor: '#ffffff',
+                        color: '#374151',
+                        padding: '0.75rem',
+                    }}
+                ></Column>
+
+                <Column
+                    header="Modelo"
+                    body={() => <InputTableValve valve={valve} onInputChange={onInputChange} propertyKey={"model"} placeholder={"Modelo:"} />}
                     headerStyle={{
                         backgroundColor: '#66c85f',
                         color: '#374151',
@@ -67,23 +87,7 @@ export function SubmitCylinderInformationTable() {
 
                 <Column
                     header="Nº Serie"
-                    body={() => <InputTableCylinder cylinder={cylinder} onInputChange={onInputChange} propertyKey={"serieNumber"} placeholder={"Nº Serie:"} />}
-                    headerStyle={{
-                        backgroundColor: '#66c85f',
-                        color: '#374151',
-                        fontWeight: 'bold',
-                        padding: '0.75rem',
-                    }}
-                    bodyStyle={{
-                        backgroundColor: '#ffffff',
-                        color: '#374151',
-                        padding: '0.75rem',
-                    }}
-                ></Column>
-
-                <Column
-                    header="Capacidad"
-                    body={() => <InputTableCylinder cylinder={cylinder} onInputChange={onInputChange} propertyKey={"capacity"} placeholder={"Capacidad:"} />}
+                    body={() => <InputTableValve valve={valve} onInputChange={onInputChange} propertyKey={"serieNumber"} placeholder={"Nº Serie:"} />}
                     headerStyle={{
                         backgroundColor: '#66c85f',
                         color: '#374151',
@@ -97,7 +101,8 @@ export function SubmitCylinderInformationTable() {
                     }}
                 ></Column>
             </DataTable>
-            <CustomButton text={"Submit"} color={"bg-emerald-500"} onClick={submitCylinder} />
+            <CustomButton text={"Submit"} color={"bg-emerald-500"} onClick={submitValve} />
+
         </div>
     );
 }

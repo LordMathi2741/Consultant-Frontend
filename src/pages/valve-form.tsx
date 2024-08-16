@@ -2,7 +2,9 @@
 import "../app/globals.css";
 import CustomToolbar from "@/app/public/components/custom-toolbar";
 import React from "react";
-import {SubmitValveInformationTable} from "@/app/components/submit-valve-information-table";
+import {
+    SubmitValveInformationTable
+} from "@/app/components/emit-operation-center-screen/valve-information-components/submit-valve-information-table";
 
 function ValveForm() {
     return (

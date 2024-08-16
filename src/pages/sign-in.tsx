@@ -1,7 +1,7 @@
 import React from 'react';
 import "../app/globals.css";
-import {SignInOptions} from "@/app/components/sign-in-options";
 import CustomToolbar from "@/app/public/components/custom-toolbar";
+import {SignInOptions} from "@/app/components/auth/sign-in-options";
 
 function SignInPage(){
     return (

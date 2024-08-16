@@ -2,7 +2,7 @@
 import "../app/globals.css";
 import React from "react";
 import CustomToolbar from "@/app/public/components/custom-toolbar";
-import SignUpOptions from "@/app/components/sign-up-options";
+import SignUpOptions from "@/app/components/auth/sign-up-options";
  function SignUpPage() {
     return (
         <div>

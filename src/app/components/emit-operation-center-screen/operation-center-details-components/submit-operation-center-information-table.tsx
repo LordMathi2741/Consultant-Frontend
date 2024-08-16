@@ -2,9 +2,11 @@ import {DataTable} from "primereact/datatable";
 import React, {useEffect, useState} from "react";
 import {OperationCenterService} from "@/app/helpers/operation-center.service";
 import {useRouter} from "next/navigation";
-import {InputOptionOperationCenter} from "@/app/components/table-options-operation-center";
 import {Column} from "primereact/column";
 import CustomButton from "@/app/public/components/custom-button";
+import {
+    InputOptionOperationCenter
+} from "@/app/components/emit-operation-center-screen/operation-center-details-components/table-options-operation-center";
 
 
 export function SubmitOperationCenterInformationTable(){

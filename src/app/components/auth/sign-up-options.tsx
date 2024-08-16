@@ -1,9 +1,9 @@
 
 import React, { useState } from 'react';
-import SignUpInputsOptions from "@/app/components/sign-up-inputs-options";
 import {UserService} from "@/app/helpers/user.service";
 import CustomButton from "@/app/public/components/custom-button";
 import {useRouter} from "next/navigation";
+import SignUpInputsOptions from "@/app/components/auth/sign-up-inputs-options";
 
 export default function SignUpOptions() {
     const router = useRouter();

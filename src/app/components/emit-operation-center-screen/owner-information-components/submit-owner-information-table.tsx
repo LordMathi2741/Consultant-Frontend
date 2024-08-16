@@ -2,10 +2,12 @@
 import React, {useEffect, useState} from "react";
 import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
-import {InputTableOwner} from "@/app/components/table-options-owner";
 import {useRouter} from "next/navigation";
 import {OperationCenterService} from "@/app/helpers/operation-center.service";
 import CustomButton from "@/app/public/components/custom-button";
+import {
+    InputTableOwner
+} from "@/app/components/emit-operation-center-screen/owner-information-components/table-options-owner";
 
 export function SubmitOwnerInformationTable(){
     const [owner, setOwner] = useState({
