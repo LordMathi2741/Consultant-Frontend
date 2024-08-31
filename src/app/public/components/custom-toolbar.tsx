@@ -22,11 +22,13 @@ export default function CustomToolbar(){
     return (
         <div>
             <nav className="bg-white flex justify-between p-5 ">
-                <div className="flex flex-col lg:flex-row gap-5">
+                <div className="flex flex-col lg:flex-row lg:justify-between w-full">
                     <img src="https://hiperfast.pe/images/logo-hiperfast.png" className="img-size" alt="Brand logo"/>
-                    <img src="http://38.25.38.94:5173/assets/schedule-banner-C5bXLIze.jpeg" className="img-size" alt="Schedule image"/>
+                    <img src="http://38.25.38.94:5173/assets/schedule-banner-C5bXLIze.jpeg" className="img-size lg:mx-auto"
+                         alt="Schedule image"/>
                 </div>
-                <button onClick={toggleMenu} className={`${!toggle ? 'block' : 'hidden'} lg:hidden`}><i className="pi pi-bars"/> </button>
+                <button onClick={toggleMenu} className={`${!toggle ? 'block' : 'hidden'} lg:hidden`}><i
+                    className="pi pi-bars"/></button>
                 <ul className={`${toggle ? 'flex' : 'hidden'} lg:flex flex-col lg:flex-row text-xs lg:text-base gap-3 mt-6`}>
                     {
                         isLogged ? (
