@@ -15,7 +15,7 @@ export function SubmitCylinderInformationTable() {
     const [cylinder, setCylinder] = useState({
         brand: "",
         serieNumber: "",
-        capacity: null,
+        capacity: 0,
         clientId: null
     });
 
@@ -44,21 +44,29 @@ export function SubmitCylinderInformationTable() {
 
 
     return (
-        <div className="flex flex-col justify-center items-center bg-gray-100 shadow-lg rounded-lg p-4">
+        <div className=" w-10/12 flex text-center flex-col justify-center items-center bg-gray-100 shadow-lg rounded-lg p-4">
+            <div className="flex flex-col gap-5 justify-center items-center">
+                <img src="https://hiperfast.pe/images/logo-hiperfast.png" className="img-size" alt="Brand logo"/>
+                <h3 className="underline font-bold text-xs md:text-md lg:text-base xl:text-xl"> CARTA DE AUTORIZACIÓN DEL PROPIETARIO O USUARIO FINAL DEL
+                    CILINDRO</h3>
+            </div>
             <DataTable
-                className="p-10"
+                className="p-10 w-10/12 md:w-full"
                 value={[cylinder]}
                 header="CILINDRO"
-                tableStyle={{ minWidth: '50rem' }}
+                tableStyle={{minWidth: '50rem'}}
             >
                 <Column
                     header="Marca"
-                    body={() => <InputTableCylinder cylinder={cylinder} onInputChange={onInputChange} propertyKey={"brand"} placeholder={"Marca:"} />}
+                    body={() => <InputTableCylinder cylinder={cylinder} onInputChange={onInputChange}
+                                                    propertyKey={"brand"} placeholder={"Marca:"}/>}
                     headerStyle={{
                         backgroundColor: '#66c85f',
                         color: '#374151',
                         fontWeight: 'bold',
                         padding: '0.75rem',
+                        textAlign: 'center'
+
                     }}
                     bodyStyle={{
                         backgroundColor: '#ffffff',
@@ -69,7 +77,8 @@ export function SubmitCylinderInformationTable() {
 
                 <Column
                     header="Nº Serie"
-                    body={() => <InputTableCylinder cylinder={cylinder} onInputChange={onInputChange} propertyKey={"serieNumber"} placeholder={"Nº Serie:"} />}
+                    body={() => <InputTableCylinder cylinder={cylinder} onInputChange={onInputChange}
+                                                    propertyKey={"serieNumber"} placeholder={"Nº Serie:"}/>}
                     headerStyle={{
                         backgroundColor: '#66c85f',
                         color: '#374151',
@@ -84,8 +93,9 @@ export function SubmitCylinderInformationTable() {
                 ></Column>
 
                 <Column
-                    header="Capacidad"
-                    body={() => <InputTableCylinder cylinder={cylinder} onInputChange={onInputChange} propertyKey={"capacity"} placeholder={"Capacidad:"} />}
+                    header="Capacidad (L)"
+                    body={() => <InputTableCylinder cylinder={cylinder} onInputChange={onInputChange}
+                                                    propertyKey={"capacity"} placeholder={"Capacidad:"}/>}
                     headerStyle={{
                         backgroundColor: '#66c85f',
                         color: '#374151',
@@ -100,7 +110,7 @@ export function SubmitCylinderInformationTable() {
                 ></Column>
             </DataTable>
             <CylinderFormDialog visible={dialogVisible} setVisible={setDialogVisible}/>
-            <CustomButton text={"Submit"} color={"bg-emerald-500"} onClick={submitCylinder} />
+            <CustomButton text={"Submit"} color={"bg-emerald-500"} onClick={submitCylinder}/>
         </div>
     );
 }
