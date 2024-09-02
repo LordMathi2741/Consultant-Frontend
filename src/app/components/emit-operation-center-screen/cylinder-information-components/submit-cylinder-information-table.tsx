@@ -23,7 +23,6 @@ export function SubmitCylinderInformationTable() {
     const [id, setId] = useState(null);
     const [dialogVisible, setDialogVisible] = useState(false);
     const [isLimit, setIsLimit] = useState(false);
-    const [currentIndex , setCurrentIndex] = useState(0);
     const [cylinders, setCylinders] = useState([{
         brand: "",
         serieNumber: "",
@@ -44,10 +43,6 @@ export function SubmitCylinderInformationTable() {
     }, []);
 
     useEffect(() => {
-        cylinders.forEach((_, index) => {
-            setCurrentIndex(index);
-        });
-
         if (cylinders.length >= 14) {
             setIsLimit(true);
         }
