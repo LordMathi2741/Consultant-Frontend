@@ -22,6 +22,8 @@ import { Button } from "primereact/button";
 export function SubmitCylinderInformationTable() {
     const [id, setId] = useState(null);
     const [dialogVisible, setDialogVisible] = useState(false);
+    const [isLimit, setIsLimit] = useState(false);
+    const [currentIndex , setCurrentIndex] = useState(0);
     const [cylinders, setCylinders] = useState([{
         brand: "",
         serieNumber: "",
@@ -40,6 +42,16 @@ export function SubmitCylinderInformationTable() {
         const userId = JSON.parse(sessionStorage.getItem('user') || '{}').id;
         setId(userId);
     }, []);
+
+    useEffect(() => {
+        cylinders.forEach((_, index) => {
+            setCurrentIndex(index);
+        });
+
+        if (cylinders.length >= 14) {
+            setIsLimit(true);
+        }
+    }, [cylinders]);
 
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement>, field: string, index: number) => {
         const value = e.target.value;
@@ -94,6 +106,11 @@ export function SubmitCylinderInformationTable() {
             });
         }
     }
+
+    function displayLimitAlert(){
+        alert("You have reached the limit of cylinders, you can't add more cylinders.");
+    }
+
 
     function setInfoToSessionStorage(response: any) {
         sessionStorage.setItem('cylinder', JSON.stringify(response.data));
@@ -226,9 +243,10 @@ export function SubmitCylinderInformationTable() {
                         ></Column>
                     </DataTable>
                 </div>
-            ))}
+            ))
+            }
             <div className="flex items-start w-full justify-start">
-                <Button className="bg-emerald-500 p-2 rounded-xl text-white" onClick={addNewCylinderAndValve}> <i className="pi pi-plus" /> </Button>
+                {!isLimit?  <Button className="bg-emerald-500 p-2 rounded-xl text-white" onClick={addNewCylinderAndValve}> <i className="pi pi-plus" /> </Button> : <Button className="bg-gray-500 p-2 rounded-xl text-white" onClick={displayLimitAlert}> <i className="pi pi-plus" /> </Button>}
             </div>
             <CylinderFormDialog submitValve={submitValve} visible={dialogVisible} setVisible={setDialogVisible} />
             <div className="flex items-end w-full justify-end">

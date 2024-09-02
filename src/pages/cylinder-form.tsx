@@ -9,7 +9,7 @@ import {
     return (
         <div>
             <CustomToolbar/>
-            <div className="operation-center-container flex justify-center items-center flex-col gap-5">
+            <div className="operation-center-container flex justify-center items-center flex-col gap-5 py-14">
                 <SubmitCylinderInformationTable/>
             </div>
         </div>
