@@ -40,7 +40,7 @@ export function SubmitOwnerDetails(){
             lastName: fullName.split(" ")[1]
         })
         const response = await OperationCenterService.prototype.SubmitOwner(owner);
-        sessionStorage.setItem("owner", JSON.stringify(response));
+        sessionStorage.setItem("owner", JSON.stringify(response.data));
         setStatusCode(response.status);
 
     }
@@ -48,17 +48,28 @@ export function SubmitOwnerDetails(){
     useEffect(() => {
         const cylinderId = JSON.parse(sessionStorage.getItem('cylinder') || '{}').id;
         setCylinderId(cylinderId);
+        console.log("Cylinder id", cylinderId)
     }, []);
 
+
+    useEffect(() => {
+        const id = JSON.parse(sessionStorage.getItem('owner') || '{}').id;
+        setOwnerId(id);
+    }, []);
+
+    useEffect(() => {
+        if (ownerId && cylinderId) {
+            setVehicle((prevVehicle) => ({
+                ...prevVehicle,
+                ownerId: ownerId,
+                cylinderId: cylinderId
+            }));
+        }
+    }, [ownerId, cylinderId]);
+
     async function submitVehicleDetails(){
-        getOwnerIdFromStorage()
-        setVehicle({
-            ...vehicle,
-            ownerId: ownerId,
-            cylinderId: cylinderId
-        })
         await OperationCenterService.prototype.SubmitVehicle(vehicle).then((response) => {
-            sessionStorage.setItem("vehicle", JSON.stringify(response));
+            sessionStorage.setItem("vehicle", JSON.stringify(response.data));
             setStatusCode(response.status)
         }).catch(() => {
             alert("Error while submitting vehicle information. Please try again.")
@@ -66,10 +77,6 @@ export function SubmitOwnerDetails(){
         console.log("Vehicle response", vehicle)
     }
 
-    function getOwnerIdFromStorage(){
-        const id = JSON.parse(sessionStorage.getItem('owner') || '{}').id;
-        setOwnerId(id);
-    }
 
 
     async function submitData(){
@@ -118,9 +125,9 @@ export function SubmitOwnerDetails(){
                 </div>
 
                 <div
-                    className="text-xs md:text-md lg:text-base xl:text-lg flex justify-center items-center flex-col font-bold gap-5 mt-10">
+                    className="text-xs md:text-md lg:text-base xl:text-lg flex justify-center items-start flex-col font-bold gap-5 mt-10">
                     <h2> B. DATOS DEL VEHÍCULO DE CONVERSIÓN que desmontó el cilindro:</h2>
-                    <div className="flex justify-evenly items-center  gap-5 w-full">
+                    <div className="flex justify-evenly items-start  gap-5 w-full">
                         <h2> Placa: </h2>
                        <InputTableVehicle vehicle={vehicle} onChanges={(e) => setVehicle({...vehicle, vehicleIdentifier: e.target.value})} propertyKey={"vehicleIdentifier"} placeholder={"Ingrese la placa"}/>
                     </div>
